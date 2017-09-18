@@ -1,0 +1,37 @@
+{
+    "variables": {
+        "vcenter_server": "",
+        "vcenter_username": "",
+        "vcenter_password": "",
+        "vsphere_datacenter": "",
+        "vsphere_cluster": "",
+        "vsphere_datastore": "",
+        "ssh_username": "",
+        "ssh_password": "",
+        "source_template": "",
+        "destination_template": ""
+    },
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "./playbook.yml"
+        }
+    ],
+    "builders" : [
+        {
+            "type": "vsphere",
+            "vcenter_server": "{{ user `vcenter_server` }}",
+            "username": "{{ user `vcenter_username` }}",
+            "password": "{{ user `vcenter_password` }}",
+            "insecure_connection": true,
+            "datacenter": "{{ user `vsphere_datacenter` }}",
+            "template": "{{ user `source_template` }}",
+            "vm_name": "{{ user `destination_template` }}",
+            "host": "{{ user `vsphere_cluster` }}",
+            "datastore": "{{ user `vsphere_datastore` }}",
+            "ssh_username": "{{ user `ssh_username` }}",
+            "ssh_password": "{{ user `ssh_password` }}",
+            "convert_to_template": true
+        }
+    ]
+}
